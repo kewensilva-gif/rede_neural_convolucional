@@ -10,24 +10,14 @@ def compute_mean_std(dataset_path):
   ])
 
   dataset = datasets.ImageFolder(root=dataset_path, transform=transform)
-  loader = DataLoader(dataset, batch_size=32, shuffle=False, num_workers=0)
+  imgs = torch.stack([img_t for img_t, _ in dataset], dim=3)
+  # imgs.shape
+  
+  mean = imgs.view(3,-1).mean(dim=1)
+  std = imgs.view(3,-1).std(dim=1)
 
-  mean = torch.zeros(3)
-  std = torch.zeros(3)
-  num_samples = 0
-
-  for images, _ in loader:
-    batch_samples = images.size(0)
-    num_samples += batch_samples
-    
-    mean += images.mean(dim=[0, 2, 3]) * batch_samples
-    std += images.std(dim=[0, 2, 3]) * batch_samples
-
-  mean /= num_samples
-  std /= num_samples
-
-  print(f"Mean calculado: {mean.tolist()}")
-  print(f"Std calculado: {std.tolist()}")
+  print(f"Mean calculado: {mean}")
+  print(f"Std calculado: {std}")
 
 if __name__ == '__main__':
   compute_mean_std(dataset_path)
