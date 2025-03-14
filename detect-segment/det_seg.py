@@ -91,7 +91,7 @@ def removeRuido(mask,deltaRuido):
   # Filtro Mediano - Remover ruídos da máscara
   return cv2.medianBlur(mask, deltaRuido)
 
-def segObjetos(imagem_caminho, pasta_saida, nomeImagem, variacao=5, deltaRuido=3, tamSeg=200):
+def segObjetos(imagem_caminho, pasta_saida, nomeImagem, variacao=20, deltaRuido=5, tamSeg=200):
   # Carrega a imagem local
   imagem = carregaImagem(imagem_caminho)
   if imagem is None:
@@ -107,16 +107,16 @@ def segObjetos(imagem_caminho, pasta_saida, nomeImagem, variacao=5, deltaRuido=3
 
   # Definição das Máscaras ref. aos Objetos
   # Máscara 1
-  rgb = [196, 125, 137]
+  rgb = [196, 100, 117]
   mask1 = definirMascaraOBJ(pasta_saida,imagem,imagem_hsv,rgb,1)
   # Máscara 2
-  rgb = [198, 131, 127]
+  rgb = [200, 90, 127]
   mask2 = definirMascaraOBJ(pasta_saida,imagem,imagem_hsv,rgb,2)
   # Máscara 3
-  rgb = [173, 105, 129]
+  rgb = [183, 105, 129]
   mask3 = definirMascaraOBJ(pasta_saida,imagem,imagem_hsv,rgb,3)
   # Máscara 4
-  rgb = [154, 87, 105]
+  rgb = [174, 87, 105]
   mask4 = definirMascaraOBJ(pasta_saida,imagem,imagem_hsv,rgb,4)
 
   # Combina as máscaras e apresenta
@@ -179,14 +179,14 @@ for i in range(0,12):
     extensao = "jpg"
 
     # Parâmetro do caminho para as imagens
-    caminho_saida = f"./imagens/{arquivo}{i}"
-    caminho_imagem = f"./imagens/{arquivo}{i}.{extensao}"
+    caminho_saida = f"detect-segment/imagens/{arquivo}{i}"
+    caminho_imagem = f"detect-segment/imagens/{arquivo}{i}.{extensao}"
 
     # Parâmetro para variação para mais ou menos referente à cor HSV do pixel do objeto
     variacao = 5
 
     # Parâmetro para o Filtro Mediano - Remover ruídos da máscara
-    deltaRuido = 3
+    deltaRuido = 5
 
     # Parâmetro para definir o tamanho mínimo, em pixels, de um segmento
     tamSeg = 200
